@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const path = require('path')
 const session = require('express-session')
 const passport = require('passport')
+const expressLayout = require('express-ejs-layouts')
 const connectDb = require('./config/db')
 
 const app = express()
@@ -21,8 +22,14 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
 
-// handlebar
-app.set('view engine', "hbs")
+
+app.set('views', path.join(__dirname, 'views'));
+app.use('/css', express.static(__dirname + 'public/css'))
+
+// view engine
+app.use(expressLayout)
+app.set('layout', './layout/layout.ejs')
+app.set('view engine', 'ejs')
 
 //Session
 app.use(session({
@@ -39,15 +46,13 @@ app.use(passport.session())
 //static file
 app.use(express.static(path.join(__dirname, 'public')))
 
-//r0uters list 
-const routerIndex = require('./routes/index')
 
 
 const port = process.env.PORT || 5000
 
 //routes
 
-app.use("/", routerIndex);
+app.use("/", require('./routes/index'));
 app.use('/auth', require('./routes/auth'))
 
 app.listen(port, () => console.log(`Server running in ${process.env.NODE_ENV} mode on port ${port}!`)) 
