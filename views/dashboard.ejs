@@ -26,7 +26,17 @@
                     </span>
 
                 </td>
-                <td></td>
+                <td>
+                    <a href="/stories/edit/<%= story._id %> " class="btn btn-float">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <form action="/stories/<%= story._id %> " method="POST" id="delete-form">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn red" type="submit">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
 
             </tbody>
             <% }) %>

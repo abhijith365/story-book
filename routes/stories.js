@@ -11,39 +11,6 @@ const { stripTags, truncate, editIocn, select } = require('../helper/ejs')
 router.get('/add', ensureAuth, (req, res) => {
     res.render('stories/add')
 })
-//@desc  edit stories
-//@route GET /stories/edit/:id
-
-router.get('/edit/:id', ensureAuth, async (req, res) => {
-    try {
-        let story = await Story.findOne({ _id: req.params.id }).lean()
-
-
-        if (!story) {
-            res.render('error/404');
-        }
-        if (story.user != req.user.id) {
-            res.redirect('/stories')
-        } else {
-            res.render('stories/edit', { story, select })
-        }
-    } catch (err) {
-        console.error(err)
-    }
-
-})
-//@desc  re-save stories
-//@route GET /stories/edit/
-
-router.post('/edit', ensureAuth, async (req, res) => {
-    try {
-        let story = await Story.updateOne({ _id: req.params.id })
-        res.redirect('stories')
-    } catch (err) {
-        console.error(err)
-    }
-
-})
 
 //@desc post data 
 //@route POST /stories/
@@ -73,6 +40,96 @@ router.get('/', ensureAuth, async (req, res) => {
         res.render('error/500')
     }
 })
+
+//@desc  edit stories
+//@route GET /stories/edit/:id
+
+router.get('/edit/:id', ensureAuth, async (req, res) => {
+    try {
+        let story = await Story.findOne({ _id: req.params.id }).lean()
+
+
+        if (!story) {
+            res.render('error/404');
+        }
+        if (story.user != req.user.id) {
+            res.redirect('/stories')
+        } else {
+            res.render('stories/edit', { story, select })
+        }
+    } catch (err) {
+        console.error(err)
+    }
+
+})
+//@desc  update stories
+//@route PUT /stories/edit/
+
+router.put('/:id', ensureAuth, async (req, res) => {
+    try {
+        let story = await Story.findById(req.params.id).lean()
+
+        if (!story) {
+            res.render('error/404');
+        }
+        if (story.user != req.user.id) {
+            res.redirect('/stories')
+        } else {
+            story = await Story.findOneAndUpdate({ _id: req.params.id }, req.body, {
+                new: true,
+                runValidators: true
+            }),
+                res.redirect('/dashboard')
+        }
+
+
+    } catch (err) {
+        console.error(err)
+    }
+
+})
+//@desc delete post 
+//@route DELETE /:id
+
+router.delete('/:id', ensureAuth, async (req, res) => {
+    try {
+        let story = await Story.findById(req.params.id).lean()
+
+        if (!story) {
+            res.render('error/404');
+        }
+        if (story.user != req.user.id) {
+            res.redirect('/stories')
+        } else {
+            story = await Story.findOneAndDelete({ _id: req.params.id }),
+                res.redirect('/dashboard')
+        }
+
+
+    } catch (err) {
+        console.error(err)
+    }
+})
+
+//@desc show sigle story
+//@route GET /:id
+
+router.get('/:id', ensureAuth, async (req, res) => {
+
+    try {
+        let story = await Story.findById(req.params.id)
+        if (story) {
+            res.render('stories/view_story', { story, editIocn })
+        } else {
+            res.render('error/404')
+        }
+    } catch (error) {
+        console.error(error)
+        res.render('error/500')
+    }
+})
+
+
 
 
 

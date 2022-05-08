@@ -11,3 +11,8 @@ p {
     margin-top: 50px;
     text-align: center !important;
 }
+
+.btn-float {
+    float: left;
+    margin-right: 10px;
+}
