@@ -15,16 +15,24 @@
 
 <body>
   <%- include('../partials/header.ejs') %>
-    <div class="container">
-      <%- body %>
-    </div>
+    <%- include('../partials/_add_btn.ejs') %>
+      <div class="container">
+        <%- body %>
+      </div>
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!-- <script>
-      M.Sidenav.init(document.querySelector('.navbar'))
-    </script> -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.18.0/ckeditor.js"
+        integrity="sha512-woYV6V3QV/oH8txWu19WqPPEtGu+dXM87N9YXP6ocsbCAH1Au9WDZ15cnk62n6/tVOmOo0rIYwx05raKdA4qyQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script>
+        M.Sidenav.init(document.querySelector('.navbar'))
+        M.FormSelect.init(document.querySelector('#status'))
+        CKEDITOR.replace('body', {
+          plugin: 'wysiwygarea, toolbar, basicstyles, link'
+        })
+      </script>
 
 </body>
 

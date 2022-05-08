@@ -1,0 +1,36 @@
+<h3>Edit Story</h3>
+<div class="row">
+    <form action="/stories/edit" method=" POST" class="col s12">
+
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="title" name="title" value="<%=story.title %>">
+                <label for="title">Title</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <select name="status" id="status">
+                    <%- /* select(story.status , public) */%>
+                        <option value="public" selected>Public</option>
+                        <option value="private">Private</option>
+                </select>
+                <label for="status">Status</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <h5>Tell us your story: </h5>
+                <textarea name="body" id="body"><%=story.body %></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <input type="submit" value="Save" class="btn">
+            <a href="/dashboard" class="btn orange">Cancel</a>
+        </div>
+
+    </form>
+</div>

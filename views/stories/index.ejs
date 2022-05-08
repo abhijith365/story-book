@@ -1,0 +1,31 @@
+<h1>Stories</h1>
+<div class="row">
+    <% stories.forEach(story=> { %>
+        <div class="col s12 m4">
+            <div class="card">
+                <div class="card-image">
+                    <%- editIocn(story.user, user, story._id) %>
+                </div>
+                <div class="card-content center-align">
+                    <h5 class="card-title">
+                        <%=story.title%>
+                    </h5>
+                    <p>
+                        <%= stripTags(truncate(story.body,150))%>
+                    </p>
+                    <br>
+                    <div class=" chip">
+                        <img src="<%=story.image%>" alt="img">
+                        <a href="/stories/user/<%=story._id%>">
+                            <%=story.user.displayName%>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-action center-align">
+                    <a href="/stories/<%=story._id%>" class="btn grey">Read more</a>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+
+</div>

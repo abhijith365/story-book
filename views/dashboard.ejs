@@ -1,1 +1,34 @@
-<h1>Dashboard</h1>
+<h4>Dashboard</h4>
+<h5>Welcome <%= username %>
+</h5>
+<% if(stories) { %>
+    <table class="striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <% stories.forEach(story=> { %>
+            <tbody>
+
+                <td><a href="/stories/<%= story._id %> ">
+                        <%=story.title %>
+                    </a></td>
+                <td>
+                    <%= moment(story.createdAt).format("MMMM Do YYYY, h:mm:ss a") %>
+                </td>
+                <td><span class="dash-status">
+                        <%= story.status %>
+                    </span>
+
+                </td>
+                <td></td>
+
+            </tbody>
+            <% }) %>
+    </table>
+    <% } %>
